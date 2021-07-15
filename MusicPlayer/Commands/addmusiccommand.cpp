@@ -1,6 +1,5 @@
 #include "addmusiccommand.h"
 
-AddMusicCommand::AddMusicCommand()
-{
-
+void AddMusicCommand::exec(){
+    vm->exec_addMusic_command(url);
 }

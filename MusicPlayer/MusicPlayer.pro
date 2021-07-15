@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -23,12 +23,45 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 
+
+
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+#        Common/*.cpp \
+#        App/*.cpp \
+#        Commands/*.cpp \
+        View/mainwindow.cpp \
+#        ViewModel/*.cpp \
+#        Model/*.cpp \
+#        mainwindow.cpp \
+        App/app.cpp \
+        Model/musiclist.cpp \
+        Model/music.cpp \
+        ViewModel/viewmodel.cpp \
+        Commands/command.cpp \
+        Commands/addmusiccommand.cpp\
+        Notification/notification.cpp \
+
+
 
 HEADERS += \
-        mainwindow.h
+#        mainwindow.h \
+#        Common/*.h \
+#        App/*.h \
+#        Commands/*.h \
+        View/mainwindow.h \
+#        ViewModel/*.h \
+#        Model/*.h \
+        App/app.h \
+        Model/musiclist.h \
+        Model/music.h \
+        ViewModel/viewmodel.h \
+        Commands/command.h \
+        Commands/addmusiccommand.h\
+        Notification/notification.h\
+    Notification/notification.h
+
+        myqss.h
 
 FORMS += \
         mainwindow.ui

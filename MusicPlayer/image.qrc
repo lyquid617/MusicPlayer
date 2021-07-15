@@ -4,5 +4,18 @@
         <file>image/play.png</file>
         <file>image/skipbackward.png</file>
         <file>image/skipforward.png</file>
+        <file>image/volume.png</file>
+        <file>image/volume-off.png</file>
+        <file>image/background.png</file>
+        <file>image/repeat.png</file>
+        <file>image/repeat1.png</file>
+        <file>image/shuffle.png</file>
+        <file>image/playlist.png</file>
+        <file>image/addmusic.png</file>
+    </qresource>
+    <qresource prefix="/music">
+        <file>music/Taylor Swift - Love Story.mp3</file>
+        <file>music/m1.mp3</file>
+        <file>music/m2.mp3</file>
     </qresource>
 </RCC>

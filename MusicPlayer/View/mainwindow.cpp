@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "Notification/notification.h"
-#include "Notification/updateviewnotification.h"
+#include "View/updateviewnotification.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -23,32 +22,15 @@ void MainWindow::init_player(){
 
     //init the player
     player = new QMediaPlayer();
-    QString runPath = QCoreApplication::applicationDirPath();//获取当前exe所在路径
 
     playlist = new QMediaPlaylist();
 
     player->setPlaylist(playlist);
 
-//    for(int i=0;i<musiclist.size();i++)   //输出所有音频文件到界面
-//		{
-
-//            ui->musictable->setRowCount(i+1);
-//            QTableWidgetItem *itemName = QTableWidgetItem(musiclist[i].get_title());
-//            ui->musictable->setItem(count, 0, itemName);
-
-//			PlayerList->addMedia(QUrl::fromLocalFile(MusicPath+"\\"+fileName));
-//		}
-
-
-
     player->setVolume(80);
     //connections
     //connect(ui->Pause,&QPushButton::clicked,this,&MainWindow::on_Pause_clicked);
-//    connect(ui->skipforward,&QPushButton::clicked,this,&MainWindow::on_skipforward_clicked);
-//    connect(ui->skipbackward,&QPushButton::clicked,this,&MainWindow::on_skipbackward_clicked);
-//    connect(ui->positionSlider, &QAbstractSlider::valueChanged, this, &MainWindow::setPosition);
-//    connect(ui->addMusic, &QPushButton::clicked,this,&MainWindow::on_addMusic_clicked);
-    //connect(player, &QMediaPlayer::metaDataAvailableChanged, this, &MainWindow::updateInfo);
+
 }
 
 
@@ -69,16 +51,6 @@ void MainWindow::update(QStringList lst){
         QTableWidgetItem *itemName = new QTableWidgetItem(lst[i]);
         ui->musictable->setItem(i, 0, itemName);
     }
-//    for(int i = 0;i<playlist->mediaCount();i++){
-
-//        ui->musictable->setRowCount(i+1);
-
-//        QTableWidgetItem *itemName = new QTableWidgetItem(playlist->media(i).canonicalUrl().toString());
-//        ui->musictable->setItem(i, 0, itemName);
-
-//    }
-
-
 }
 
 

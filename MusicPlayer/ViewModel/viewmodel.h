@@ -13,6 +13,7 @@ private:
     //QMediaPlaylist* playlist;
     std::shared_ptr<Notification> update_view_notification;
     std::shared_ptr<Command> addMusic_command;
+    std::shared_ptr<Notification> update_info_notification;
 public:
     ViewModel();
     void exec_addMusic_command(QUrl &urli);
@@ -23,6 +24,9 @@ public:
     std::shared_ptr<Command> get_addMusic_command();
     //QMediaPlaylist* get_playlist();
     void set_update_view_notification(std::shared_ptr<Notification>);
+    std::shared_ptr<Notification> get_update_info_notification();
+       void AcceptNotify(QString &qs);
+
 };
 
 

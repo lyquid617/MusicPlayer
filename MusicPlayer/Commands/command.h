@@ -1,8 +1,6 @@
 #ifndef COMMAND_H
 #define COMMAND_H
-
-#include "ViewModel/viewmodel.h"
-class ViewModel;
+#include<QUrl>
 
 class Command
 {

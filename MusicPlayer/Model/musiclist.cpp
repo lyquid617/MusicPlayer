@@ -2,7 +2,7 @@
 
 MusicList::MusicList()
 {
-    ptr2lst = &musics;
+
 }
 
 
@@ -11,8 +11,9 @@ void MusicList::addMusic(QUrl &url){
     musics.push_back(Music(url));
     QString q = url.toString();
     QString *p = &q;
-    update_view_notification->add_parameter(p);
-    notify();
+    update_info_notification->exec_add_music(p);
+    //notify();
+
 }
 
 //void MusicList::addToPlayList(){
@@ -23,16 +24,11 @@ void MusicList::addMusic(QUrl &url){
 
 //}
 
-QVector<Music>* MusicList::getList(){
-    return ptr2lst;
+
+
+
+
+void MusicList::set_update_info_notification(shared_ptr<Notification> noti){
+    update_info_notification = noti;
 }
 
-
-
-void MusicList::set_update_view_notification(shared_ptr<Notification> noti){
-    update_view_notification = noti;
-}
-
-void MusicList::notify(){
-    update_view_notification->exec();
-}

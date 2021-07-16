@@ -9,7 +9,6 @@
 #include "myqss.h"
 #include <QDir>
 #include "Commands/command.h"
-#include "Model/music.h"
 #include <QFileDialog>
 #include <QStandardPaths>
 class Notification;
@@ -49,18 +48,9 @@ private:
     Ui::MainWindow *ui;
     QMediaPlayer *player;
     QMediaPlaylist *playlist;
+    bool isplay = false;
 
     std::shared_ptr<Command> addmusiccommand;
-    bool isplay = false;
-    //QString current_file;
-
-    //for test use
-    //QString MusicPath = ":/music/music";
-
-    //QStringList fileList;  //文件名称
-
-    //QStringList getFileNames(const QString &path);	//获取路径下所有需要的文件类型文件
-    //void addItem(QString name);
     void updateInfo();
     void setPosition(int position);
     std::shared_ptr<Notification> update_view_notification;

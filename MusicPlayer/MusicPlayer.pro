@@ -37,9 +37,10 @@ SOURCES += \
         Model/music.cpp \
         ViewModel/viewmodel.cpp \
         Commands/command.cpp \
-        Commands/addmusiccommand.cpp\
+        ViewModel/addmusiccommand.cpp\
         Notification/notification.cpp \
-    Notification/updateviewnotification.cpp
+    View/updateviewnotification.cpp \
+    ViewModel/updateinfonotification.cpp
 
 
 
@@ -56,10 +57,11 @@ HEADERS += \
         Model/music.h \
         ViewModel/viewmodel.h \
         Commands/command.h \
-        Commands/addmusiccommand.h\
+        ViewModel/addmusiccommand.h\
         Notification/notification.h\
     Notification/notification.h \
-    Notification/updateviewnotification.h
+    View/updateviewnotification.h \
+    ViewModel/updateinfonotification.h
 
         myqss.h
 

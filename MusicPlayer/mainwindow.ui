@@ -211,7 +211,7 @@ border:none;
      <string>TextLabel</string>
     </property>
    </widget>
-   <widget class="QTableWidget" name="musiclist">
+   <widget class="QTableWidget" name="musictable">
     <property name="geometry">
      <rect>
       <x>170</x>

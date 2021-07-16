@@ -10,6 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = MusicPlayer
 TEMPLATE = app
+CONFIG += c++17
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked as deprecated (the exact warnings
@@ -27,9 +28,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-#        Common/*.cpp \
-#        App/*.cpp \
-#        Commands/*.cpp \
         View/mainwindow.cpp \
 #        ViewModel/*.cpp \
 #        Model/*.cpp \
@@ -41,6 +39,7 @@ SOURCES += \
         Commands/command.cpp \
         Commands/addmusiccommand.cpp\
         Notification/notification.cpp \
+    Notification/updateviewnotification.cpp
 
 
 
@@ -59,7 +58,8 @@ HEADERS += \
         Commands/command.h \
         Commands/addmusiccommand.h\
         Notification/notification.h\
-    Notification/notification.h
+    Notification/notification.h \
+    Notification/updateviewnotification.h
 
         myqss.h
 

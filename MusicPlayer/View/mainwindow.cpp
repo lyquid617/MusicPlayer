@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "Notification/notification.h"
+#include "Notification/updateviewnotification.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -25,32 +26,59 @@ void MainWindow::init_player(){
     QString runPath = QCoreApplication::applicationDirPath();//获取当前exe所在路径
 
     playlist = new QMediaPlaylist();
-    playlist->setPlaybackMode(QMediaPlaylist::Loop);
-
-
-
-//    for(int i=0;i<fileList.size();i++)   //输出所有音频文件到界面
-//        {
-
-
-//            QString fileName = fileList.at(i);
-//            qDebug() <<fileName<<endl;
-//            addItem(fileName);
-
-//            playlist->addMedia(QUrl("qrc"+MusicPath+"/"+fileName));
-
-//        }
-    playlist->setCurrentIndex(0);
 
     player->setPlaylist(playlist);
+
+//    for(int i=0;i<musiclist.size();i++)   //输出所有音频文件到界面
+//		{
+
+//            ui->musictable->setRowCount(i+1);
+//            QTableWidgetItem *itemName = QTableWidgetItem(musiclist[i].get_title());
+//            ui->musictable->setItem(count, 0, itemName);
+
+//			PlayerList->addMedia(QUrl::fromLocalFile(MusicPath+"\\"+fileName));
+//		}
+
+
+
     player->setVolume(80);
     //connections
     //connect(ui->Pause,&QPushButton::clicked,this,&MainWindow::on_Pause_clicked);
-    connect(ui->skipforward,&QPushButton::clicked,this,&MainWindow::on_skipforward_clicked);
-    connect(ui->skipbackward,&QPushButton::clicked,this,&MainWindow::on_skipbackward_clicked);
-    connect(ui->positionSlider, &QAbstractSlider::valueChanged, this, &MainWindow::setPosition);
-    connect(ui->addMusic, &QPushButton::clicked,this,&MainWindow::on_addMusic_clicked);
-    connect(player, &QMediaPlayer::metaDataAvailableChanged, this, &MainWindow::updateInfo);
+//    connect(ui->skipforward,&QPushButton::clicked,this,&MainWindow::on_skipforward_clicked);
+//    connect(ui->skipbackward,&QPushButton::clicked,this,&MainWindow::on_skipbackward_clicked);
+//    connect(ui->positionSlider, &QAbstractSlider::valueChanged, this, &MainWindow::setPosition);
+//    connect(ui->addMusic, &QPushButton::clicked,this,&MainWindow::on_addMusic_clicked);
+    //connect(player, &QMediaPlayer::metaDataAvailableChanged, this, &MainWindow::updateInfo);
+}
+
+
+
+void MainWindow::set_addMusic_command(std::shared_ptr<Command> cmd){
+    addmusiccommand = cmd;
+}
+
+std::shared_ptr<Notification> MainWindow::get_update_notification(){
+    return update_view_notification;
+}
+
+void MainWindow::update(QStringList lst){
+
+    for(int i = 0;i<lst.size();i++){
+        //qDebug() << musiclist[i].get_title()<<endl;
+        ui->musictable->setRowCount(i+1);
+        QTableWidgetItem *itemName = new QTableWidgetItem(lst[i]);
+        ui->musictable->setItem(i, 0, itemName);
+    }
+//    for(int i = 0;i<playlist->mediaCount();i++){
+
+//        ui->musictable->setRowCount(i+1);
+
+//        QTableWidgetItem *itemName = new QTableWidgetItem(playlist->media(i).canonicalUrl().toString());
+//        ui->musictable->setItem(i, 0, itemName);
+
+//    }
+
+
 }
 
 
@@ -58,11 +86,13 @@ void MainWindow::on_skipforward_clicked()
 {
     playlist->next();
     playlist->nextIndex();
+    updateInfo();
 }
 void MainWindow::on_skipbackward_clicked()
 {
     playlist->previous();
     playlist->previousIndex();
+    updateInfo();
 }
 void MainWindow::on_Pause_clicked()
 {
@@ -78,6 +108,7 @@ void MainWindow::on_Pause_clicked()
                 ui->Pause->setStyleSheet(PauseStyle());
                 player->pause();
             }
+    updateInfo();
 }
 
 void MainWindow::setPosition(int position)
@@ -98,25 +129,6 @@ void MainWindow::updateInfo(){
     ui->label->setText(info);
 }
 
-QStringList MainWindow::getFileNames(const QString &path)
-{
-
-    QDir dir(path);
-    QStringList nameFilters;
-    nameFilters << "*.mp3";
-    QStringList files = dir.entryList(nameFilters, QDir::Files|QDir::Readable, QDir::Name);
-    return files;
-}
-void MainWindow::addItem(QString name)
-{
-    int count = ui->musiclist->rowCount();
-    ui->musiclist->setRowCount(count+1);
-
-    QTableWidgetItem *itemName = new QTableWidgetItem(name);
-
-    ui->musiclist->setItem(count, 0 , itemName);
-
-}
 
 void MainWindow::on_playlist_clicked()
 {
@@ -125,18 +137,34 @@ void MainWindow::on_playlist_clicked()
 
 void MainWindow::on_addMusic_clicked()
 {
-    //add music to music list
-    //add music commmand
-    addmusiccommand->exec();
-}
-void MainWindow::set_addMusic_command(std::shared_ptr<Command> cmd){
-    addmusiccommand = cmd;
+    QFileDialog fileDialog;
+    qDebug() <<"1"<<endl;
+    fileDialog.setAcceptMode(QFileDialog::AcceptOpen);
+    fileDialog.setFileMode(QFileDialog::ExistingFiles);
+    fileDialog.setWindowTitle("add local music");
+    QStringList list;list<<"application/octet-stream";
+    fileDialog.setMimeTypeFilters(list);
+
+    fileDialog.setDirectory(QStandardPaths::standardLocations(QStandardPaths::MusicLocation).value(0, QDir::homePath()));
+
+    if (fileDialog.exec() == QDialog::Accepted){
+       QList<QUrl> urls=fileDialog.selectedUrls();
+       QStringList mscnames = fileDialog.selectedFiles();
+
+
+       for(int i = 0;i<urls.size();i++){
+           //addMusic(urls[i]);
+           qDebug() << urls[i]<<endl;
+           playlist->addMedia(QUrl(urls[i]));
+           addmusiccommand->exec(urls[i]);
+       }
+    }
+
+
 }
 
-std::shared_ptr<Notification> MainWindow::get_update_notification(){
-    return update_view_notification;
-}
 
-void MainWindow::update(){
 
-}
+
+
+
